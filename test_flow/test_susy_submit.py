@@ -1,9 +1,8 @@
+import time
 import unittest
 
-import pytest
-
 from page_object.susy_submit import *
-import time
+
 
 class Test_susy_submit(unittest.TestCase):
 

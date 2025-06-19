@@ -1,20 +1,21 @@
 import time
-from logging import exception
-from time import sleep
+
 
 from selenium import webdriver
 from selenium.common import NoSuchElementException, ElementNotInteractableException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 
+from page_object.basepage import BasePage
 
 
 class Process_Manu:
-    def __init__(self,driver):
+    def __init__(self,login):
         self.backend_url = "https://zhou.sciprints.mdpi.dev/editor/index"
-        self.driver = driver
+
         self.options = webdriver.ChromeOptions()
-        # self.options.add_argument('--user-data-dir=C:/Users/MDPI/PycharmProjects/UI_test/')
+        self.driver = login
+        self.options.add_argument('--user-data-dir=C:/Users/MDPI/PycharmProjects/UI_test/')
         self.wait = WebDriverWait(self.driver, 10)
         self.js_to_down = "document.documentElement.scrollTop=100000"
 

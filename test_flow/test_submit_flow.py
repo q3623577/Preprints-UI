@@ -1,32 +1,29 @@
 import time
-
-import unittest
-from page_object.login_op import TestOpenPage
-from page_object.submit_op import PageObjectSubmit
-import pytest
-import allure
-# from test_case.conftest import set_data, get_data
 from datetime import datetime
+
+import pytest
+
+from page_object.excel_op import ExcelOp
+from page_object.submit_op import PageObjectSubmit
+
+
 #登录
-
-
-
 
 
 class TestAddPreprints:
     now_time = datetime.now()
     current_time = now_time.strftime("%Y-%m-%d %H:%M:%S")
-    @pytest.fixture(autouse=True)
-    def setUp(self,login):
-        self.driver = login
-        self.hold=PageObjectSubmit(self.driver)
-        yield
+    # @pytest.fixture(autouse=True)
+    # def setUp(self,login):
+    #     self.driver = login
+    #     self.hold=PageObjectSubmit(self.driver)
+    #     yield
+    #
+    # def tearDown(self):
+    #     self.driver.quit()
 
-    def tearDown(self):
-        self.driver.quit()
-
-    def test_add_new_preprints(self):
-        submit_new =self.hold
+    def test_add_new_preprints(self,login):
+        submit_new =PageObjectSubmit(login)
         submit_new.click_submit()
         submit_new.click_agree()
         submit_new.click_add_new()
@@ -36,17 +33,18 @@ class TestAddPreprints:
         submit_new.click_subject2()
         submit_new.click_MDPI_topics()
         js = "document.documentElement.scrollTop=500"
-        self.driver.execute_script(js)  # 下滑滚动条
+        login.execute_script(js)  # 下滑滚动条
         submit_new.click_next()
 
         # 投稿第二步
         submit_new.click_type()
+        time.sleep(5)
         submit_new.input_content('title',self.current_time+" title")
         submit_new.input_content('abstract',self.current_time+" ab")
         submit_new.input_content('keywords',self.current_time+" key")
         time.sleep(1)
         js = "document.documentElement.scrollTop=1000"
-        self.driver.execute_script(js)  # 下滑滚动条
+        login.execute_script(js)  # 下滑滚动条
         submit_new.click_next1()
 
         # 投稿第三步
@@ -61,17 +59,21 @@ class TestAddPreprints:
         submit_new.click_next2()
 
         # 投稿第五步
-        submit_new.upload_file('paper',r'E:\test-data\test_4\preprints-132659-manuscript.docx')
-        submit_new.upload_file('pdf', r'E:\test-data\test_4\preprints-132659-final_file.pdf')
+        submit_new.upload_file('paper',r'E:\test-data\test_auto\preprints-132659-manuscript.docx')
+        submit_new.upload_file('pdf', r'E:\test-data\test_auto\preprints-132659-final_file.pdf')
         submit_new.click_accpet()
+        time.sleep(10)
         submit_new.click_confirm_submit()
-
-
         submit_new.click_proceed()
-        # page.driver.implicitly_wait(10)
 
-        # preprint_id = submit_new.get_preprint_id()
-        # set_data("ppid",preprint_id)
+        # 投稿第六步 存储数据
+        time.sleep(3)
+        preprint_id = submit_new.get_preprint_id()
+        status = submit_new.get_status()
+        excel_op = ExcelOp()
+        excel_op.add_data([preprint_id,status,self.current_time])
+        excel_op.save_data()
+        # print(preprint_id) # set_data("ppid",preprint_id)
 
     # 投稿follow-up version
     def test_follow_new_preprints(self,login):

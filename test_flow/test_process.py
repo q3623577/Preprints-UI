@@ -1,18 +1,23 @@
 import allure
+import pytest
 
 from page_object import backend_pocess
-import pytest
-from page_object.login_op import page
+from page_object.excel_op import ExcelOp
+
 
 class TestProcess:
 
     @allure.story("稿件处理--check")
-    def test_check(self,get_data):
-        process = backend_pocess.Process_Manu(page.driver)
+    def test_check(self,login):
+        process = backend_pocess.Process_Manu(login)
         process.open_browser()
-        process.open_detail_page(get_data("ppid"))
+        excel_op = ExcelOp()
+        preprints_id = excel_op.get_data()[-1][0]
+        process.open_detail_page(preprints_id)
         process.check_list()
         process.click_accept("ok")
+        excel_op.update_data(preprints_id,"checked")
+
 
     @pytest.mark.skip
     def test_accept(self):

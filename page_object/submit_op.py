@@ -112,16 +112,16 @@ class PageObjectSubmit(BasePage):
     def click_subject2(self):
         subject2 = self.find_element((By.XPATH, self.subject2))
         subject2.click()
-        subject2_all=self.find_element((By.CSS_SELECTOR, self.all_subject))
-        sleep(2)
-        subject2_all.find_elements(By.TAG_NAME, self.subject2_select)[2].click()
+        # subject2_all = self.find_element((By.CSS_SELECTOR, self.all_subject))
+        sleep(1)
+        self.find_element((By.CSS_SELECTOR, self.all_subject)).find_elements(By.TAG_NAME, self.subject2_select)[2].click()
         
 
     def click_MDPI_topics(self):
         self.find_elements((By.CSS_SELECTOR, self.mdpi_topic))[-1].click()
         open_topic = self.find_element((By.CSS_SELECTOR, "ul[class='common-field__options']"))
         # self.driver.implicitly_wait(10)
-        sleep(2)
+        sleep(1)
         open_topic.find_elements(By.TAG_NAME, self.mdpi_topic_select)[2].click()
 
     def click_next(self):  #步骤1
@@ -233,7 +233,7 @@ class PageObjectSubmit(BasePage):
     # 上传文件
     def upload_file(self, filetype, file_path):
         # time.sleep(2)
-        file_flame = self.find_element((By.XPATH, '//*[@id="__nuxt"]/div[2]/div[1]/div/div/div[2]'))
+        file_flame = self.find_element((By.XPATH, '//*[@id="__nuxt"]/div[2]/div[1]/div/div/div[6]'))
         up_buttons = file_flame.find_elements(By.CSS_SELECTOR, 'button[type=button]')
         if filetype == 'paper':
             up_buttons[0].click()
@@ -284,9 +284,13 @@ class PageObjectSubmit(BasePage):
 
     def click_proceed(self):
         proceed = self.find_element((By.CSS_SELECTOR, self.proceed_gap))
-        proceed.find_elements((By.TAG_NAME, "button"))[1].click()
+        proceed.find_elements(By.TAG_NAME, "button")[1].click()
+        self.driver.implicitly_wait(10)
         
 
     def get_preprint_id(self):
         return self.find_element((By.XPATH,"//p[contains(text(),'1')]")).text
+
+    def get_status(self):
+        return self.find_element((By.XPATH,'//*[@id="__nuxt"]/div[2]/div[1]/div/div[2]/div[2]/div[1]/div[2]/div[2]/div/div[1]/div[1]')).text
 

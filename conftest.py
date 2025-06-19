@@ -1,12 +1,12 @@
+import time
+
 import pytest
 from selenium import webdriver
 from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
-# from page_object.basepage import BasePage
-import time
 
-options = webdriver.ChromeOptions()
-options.add_argument('--user-data-dir=C:/Users/MDPI/PycharmProjects/UI_test/')
+option = webdriver.ChromeOptions()
+option.add_argument('--user-data-dir=C:/Users/MDPI/PycharmProjects/UI_test/')
 # driver = webdriver.Chrome(options=options)
 Continue = "/html/body/main/div/div[2]/div[2]/div[1]/form/div/div[3]/input[2]"
 LoginBtn = '//*[@id="__nuxt"]/div[2]/header/div/div[2]/div/div[1]/div[1]/button/span'
@@ -14,7 +14,7 @@ LoginBtn = '//*[@id="__nuxt"]/div[2]/header/div/div[2]/div/div[1]/div[1]/button/
 @pytest.fixture(scope="function")
 def browser():
     """浏览器初始化与销毁"""
-    driver = webdriver.Chrome(options=options)
+    driver = webdriver.Chrome(options=option)
     driver.maximize_window()
     yield driver
     driver.quit()
@@ -43,7 +43,8 @@ def login():
     time.sleep(3)
     try:
         flame = driver.find_element(by=By.XPATH, value='html/body/aside')
-        flame.find_element(by=By.XPATH,value='/html/body/aside//div/div/footer/div/div/button[2]').click()
+        # shadow_root=flame.shadow_root
+        flame.shadow_root.find_element(by=By.ID,value='accept').click()
     except NoSuchElementException as e:
         print("aleady accept")
     yield driver

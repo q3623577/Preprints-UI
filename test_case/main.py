@@ -18,6 +18,10 @@ class TestCase:
     #
     # def tearDown(self):
     #     self.driver.quit()
+    @allure.feature("test_login")
+    @allure.story("test_login")
+    def test_login(self,login):
+        print("登录成功")
 
     @allure.feature("test_submit_flow")
     @allure.story("test_submit_new_preprints")

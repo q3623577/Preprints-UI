@@ -67,7 +67,7 @@ class TestAddPreprints:
         submit_new.click_proceed()
 
         # 投稿第六步 存储数据
-        time.sleep(3)
+        time.sleep(5)
         preprint_id = submit_new.get_preprint_id()
         status = submit_new.get_status()
         excel_op = ExcelOp()

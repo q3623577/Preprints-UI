@@ -17,7 +17,8 @@ class Process_Manu:
         self.driver = login
         self.options.add_argument('--user-data-dir=C:/Users/MDPI/PycharmProjects/UI_test/')
         self.wait = WebDriverWait(self.driver, 10)
-        self.js_to_down = "document.documentElement.scrollTop=100000"
+        self.js_to_mid = "document.documentElement.scrollTop=500"
+        self.js_to_down = "document.documentElement.scrollTop=1000"
 
     def open_browser(self):
         self.driver.execute_script(f"window.open('{self.backend_url}', '_blank');")
@@ -35,12 +36,13 @@ class Process_Manu:
         windows = self.driver.window_handles
         self.driver.switch_to.window(windows[-1])
         try:
-            checklist= self.driver.find_element(by=By.XPATH, value='//*[@id="main-content"]/div[3]/div[2]/div[2]')
+            self.driver.execute_script(self.js_to_mid)
+            checklist= self.driver.find_element(by=By.XPATH, value='//*[@id="main-content"]/div[2]/div[2]/div/div[20]/form')
             checks = checklist.find_elements(by=By.CSS_SELECTOR, value="input[type='radio']")
-            self.driver.execute_script(self.js_to_down)
             for check in checks[:16:2]:
                 check.click()
             self.driver.implicitly_wait(10)
+            self.driver.execute_script(self.js_to_down)
             self.driver.find_element(by=By.CSS_SELECTOR,value="button[type='submit']").click()
         except NoSuchElementException:
             print("The checklist is checked")

@@ -19,7 +19,7 @@ def browser():
     yield driver
     driver.quit()
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="session")
 def login():
     """登录账户"""
     driver = webdriver.Chrome()

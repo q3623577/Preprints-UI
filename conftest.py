@@ -32,7 +32,7 @@ def login():
         driver.find_element(by=By.XPATH,
                                 value=LoginBtn).click()
         driver.implicitly_wait(10)
-        driver.find_element(by=By.ID, value="username").send_keys("zhuohu.guo@mdpi.com")
+        driver.find_element(by=By.ID, value="username").send_keys("test.DA@mdpi.com")
         driver.find_element(by=By.ID, value="password").send_keys("Guozhuohu12345@")
         # time.sleep(100)
         driver.find_element(by=By.XPATH,

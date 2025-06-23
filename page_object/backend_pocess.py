@@ -28,6 +28,7 @@ class Process_Manu:
         self.driver.implicitly_wait(10)
 
     def open_detail_page(self,ppid):
+        time.sleep(3)
         value = '//td/a[contains(text(),'+ppid+')]'
         self.driver.find_element(by=By.XPATH, value=value).click()
         self.driver.implicitly_wait(10)

@@ -15,8 +15,9 @@ class TestProcess:
         preprints_id = excel_op.get_data()[-1][0]
         process.open_detail_page(preprints_id)
         process.check_list()
-        process.click_accept("ok")
+        # process.click_accept("ok")
         excel_op.update_data(preprints_id,"checked")
+        excel_op.save_data()
 
 
     @pytest.mark.skip

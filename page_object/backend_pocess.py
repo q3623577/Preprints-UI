@@ -20,6 +20,16 @@ class Process_Manu:
         self.js_to_mid = "document.documentElement.scrollTop=500"
         self.js_to_down = "document.documentElement.scrollTop=1000"
 
+        self.check_sanction_step1_No='//*[@id="editor-manuscript-sanction-check"]/button[2]'
+        self.check_sanction_step2_No='//*[@id="me-sanction-check-form"]/label[1]/input'
+        self.check_sanction_step1_Yes='//*[@id="editor-manuscript-sanction-check"]/button[1]'
+        self.check_sanction_step2_Yes='//*[@id="me-sanction-check-form"]/label[2]/input'
+        self.check_submit='//*[@id="me-sanction-check-form"]/button'
+
+        self.accept_button='//a[contains(text(),"Accept")]'
+        self.cancel_button='//a[contains(text(),"Cancel")]'
+        self.ok_button='//a[contains(text(),"Ok")]'
+
     def open_browser(self):
         self.driver.execute_script(f"window.open('{self.backend_url}', '_blank');")
         windows = self.driver.window_handles
@@ -48,6 +58,18 @@ class Process_Manu:
         except NoSuchElementException:
             print("The checklist is checked")
 
+    def check_sanctions(self,step1,step2):
+        self.driver.execute_script(self.js_to_down)
+        if step1 =='yes':
+            self.driver.find_element(by=By.XPATH,value=self.check_sanction_step1_Yes).click()
+        elif step1 =='no':
+            self.driver.find_element(by=By.XPATH,value=self.check_sanction_step1_No).click()
+            if step2 =='yes':
+                self.driver.find_element(by=By.XPATH,value=self.check_sanction_step2_Yes).click()
+            else:
+                self.driver.find_element(by=By.XPATH,value=self.check_sanction_step2_No).click()
+        self.driver.find_element(by=By.XPATH,value=self.check_submit).click()
+        self.driver.implicitly_wait(10)
 
     def click_accept(self,check):
         self.driver.execute_script(self.js_to_down)
@@ -64,11 +86,11 @@ class Process_Manu:
 
     
 
-if __name__ == '__main__':
-    obj = Process_Manu()
-    obj.open_browser()
-    # obj.driver.execute_script(obj.js_to_down)
-    obj.open_detail_page("132266")
-
-    obj.check_list()
-    obj.click_accept("cancel")
+# if __name__ == '__main__':
+#     obj = Process_Manu()
+#     obj.open_browser()
+#     # obj.driver.execute_script(obj.js_to_down)
+#     obj.open_detail_page("132266")
+#
+#     obj.check_list()
+#     obj.click_accept("cancel")

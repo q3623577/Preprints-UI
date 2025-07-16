@@ -19,10 +19,16 @@ class TestProcess:
         excel_op.update_data(preprints_id,"checked")
         excel_op.save_data()
 
+    def test_sanctions_check(self,login,step1,step2):
+        process = backend_pocess.Process_Manu(login)
+        process.check_sanctions(step1,step2)
+
 
     @pytest.mark.skip
-    def test_accept(self):
-        pass
+    def test_accept(self,login):
+        process = backend_pocess.Process_Manu(login)
+        process.click_accept('ok')
+
 
     @pytest.mark.skip
     def test_Send_AB(self):

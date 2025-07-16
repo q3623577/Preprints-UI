@@ -4,10 +4,11 @@ from datetime import datetime
 from openpyxl import Workbook, load_workbook
 
 now_time = datetime.now()
-current_time = now_time.strftime("%Y-%m-%d %H:%M:%S")
+current_time = now_time.strftime("%Y-%m-%d")
 class ExcelOp:
     def __init__(self):
-        self.file_path=r'C:\Users\MDPI\PycharmProjects\UI_Preprints\testdata\test_data.xlsx'
+        self.file_path=(r'C:\Users\MDPI\PycharmProjects\UI_Preprints\testdata\test_data.'
+                        +current_time+'.xlsx')
         if os.path.exists(self.file_path):
             self.wb=load_workbook(self.file_path)
             self.ws = self.wb.active
@@ -39,7 +40,7 @@ class ExcelOp:
                 break
 
     def save_data(self):
-        self.wb.save(r'C:\Users\MDPI\PycharmProjects\UI_Preprints\testdata\test_data.xlsx')
+        self.wb.save(self.file_path)
 
 # excel_op=ExcelOp()
 # excel_op=ExcelOp()

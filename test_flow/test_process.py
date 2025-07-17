@@ -1,8 +1,8 @@
 import allure
 import pytest
-from page_object.log_op import logger
+from tool_uint.log_op import logger
 from page_object import backend_pocess
-from page_object.excel_op import ExcelOp
+from tool_uint.excel_op import ExcelOp
 
 
 class TestProcess:
@@ -30,11 +30,16 @@ class TestProcess:
         logger.info("sanctions-check成功")
 
 
-    @pytest.mark.skip
+    # @pytest.mark.skip
     def test_accept(self,login):
         process = backend_pocess.Process_Manu(login)
         process.click_accept('ok')
         logger.info("accept成功")
+
+    def test_online(self,login):
+        process = backend_pocess.Process_Manu(login)
+        process.click_online()
+        logger.info("online成功")
 
 
     @pytest.mark.skip

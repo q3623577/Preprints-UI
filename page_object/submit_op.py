@@ -84,7 +84,6 @@ class PageObjectSubmit(BasePage):
         self.find_elements((By.XPATH, self.pp_select_list))[0].click()
         # 
         # list[0].click()
-
         self.find_element((By.XPATH, self.ctn)).click()
         
 

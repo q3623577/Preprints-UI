@@ -12,13 +12,3 @@
 #         TestProcess().test_check(get_data)
 
 
-import datetime
-
-# 创建日期对象
-date_str = "2024-11-22"
-date_obj = datetime.datetime.strptime(date_str, "%Y-%m-%d")
-
-# 将日期对象转化为Unix时间戳
-timestamp = int(date_obj.timestamp())
-
-print(timestamp)

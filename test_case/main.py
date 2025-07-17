@@ -15,7 +15,7 @@ class TestCase:
         test_process.TestProcess().test_check(login)
 
     def test_sanctions_check(self,login):
-        test_process.TestProcess().test_sanctions_check(login,"no",'no')
+        test_process.TestProcess().test_sanctions_check(login)
 
     @allure.feature("test_process")
     @allure.story("test_process_accept")

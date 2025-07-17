@@ -4,6 +4,7 @@ from datetime import datetime
 import pytest
 
 from page_object.excel_op import ExcelOp
+from page_object.log_op import logger
 from page_object.submit_op import PageObjectSubmit
 
 
@@ -27,6 +28,7 @@ class TestAddPreprints:
         submit_new.click_submit()
         submit_new.click_agree()
         submit_new.click_add_new()
+        logger.info("点击添加新稿件成功, 进入投稿页面")
 
         #投稿第一步
         submit_new.click_subject()
@@ -35,6 +37,7 @@ class TestAddPreprints:
         js = "document.documentElement.scrollTop=500"
         login.execute_script(js)  # 下滑滚动条
         submit_new.click_next()
+        logger.info("投稿第一步成功")
 
         # 投稿第二步
         submit_new.click_type()
@@ -46,6 +49,7 @@ class TestAddPreprints:
         js = "document.documentElement.scrollTop=1000"
         login.execute_script(js)  # 下滑滚动条
         submit_new.click_next1()
+        logger.info("投稿第二步成功")
 
         # 投稿第三步
         submit_new.input_affi(self.current_time+" affi")
@@ -53,10 +57,12 @@ class TestAddPreprints:
         submit_new.click_corresponding("yes")
         submit_new.click_confirm()
         submit_new.click_next_button()
+        logger.info("投稿第三步成功")
 
         # 投稿第四步
         submit_new.click_declarations('no','no')
         submit_new.click_next2()
+        logger.info("投稿第四步成功")
 
         # 投稿第五步
         submit_new.upload_file('paper',r'E:\test-data\test_auto\preprints-132659-manuscript.docx')
@@ -65,6 +71,7 @@ class TestAddPreprints:
         time.sleep(10)
         submit_new.click_confirm_submit()
         submit_new.click_proceed()
+        logger.info("投稿第五步成功")
 
         # 投稿第六步 存储数据
         time.sleep(5)
@@ -73,6 +80,7 @@ class TestAddPreprints:
         excel_op = ExcelOp()
         excel_op.add_data([preprint_id,status,self.current_time])
         excel_op.save_data()
+        logger.info("保存preprints_id数据成功")
         # print(preprint_id) # set_data("ppid",preprint_id)
 
     # 投稿follow-up version

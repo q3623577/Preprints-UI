@@ -94,6 +94,7 @@ class TestAddPreprints:
     def test_follow_new_preprints(self,login):
         submit_new =PageObjectSubmit(login)
         submit_new.click_submit()
+        time.sleep(2)
         submit_new.click_agree()
         time.sleep(5)
         submit_new.click_add_follow()
@@ -102,7 +103,9 @@ class TestAddPreprints:
         logger.info("点击添加follow稿件成功, 进入投稿页面")
 
         #投稿第1步
+        time.sleep(2)
         submit_new.input_detail_of_change('this is UI test content'+self.current_time)
+        time.sleep(2)
         submit_new.click_next()
         logger.info("投稿第1步成功")
 
@@ -110,7 +113,7 @@ class TestAddPreprints:
         # submit_new.click_subject()
         # submit_new.click_subject2()
         # submit_new.click_MDPI_topics()
-        time.sleep(1)
+        time.sleep(2)
         js = "document.documentElement.scrollTop=500"
         login.execute_script(js)  # 下滑滚动条
         submit_new.click_next1()
@@ -119,9 +122,9 @@ class TestAddPreprints:
         # 投稿第3步
         # submit_new.click_type()
         time.sleep(5)
-        submit_new.input_content_follow('title',"version 1")
+        submit_new.input_content_follow('title'," version 2")
         submit_new.input_content_follow('abstract',"version 2")
-        submit_new.input_content_follow('keywords',"version 3")
+        submit_new.input_content_follow('keywords',"version 2")
         time.sleep(1)
         js = "document.documentElement.scrollTop=1000"
         login.execute_script(js)  # 下滑滚动条

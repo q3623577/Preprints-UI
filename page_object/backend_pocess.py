@@ -21,7 +21,7 @@ class Process_Manu:
         self.options.add_argument('--user-data-dir=C:/Users/MDPI/PycharmProjects/UI_test/')
         self.wait = WebDriverWait(self.driver, 10)
         self.js_to_mid = "document.documentElement.scrollTop=500"
-        self.js_to_down = "document.documentElement.scrollTop=1000"
+        self.js_to_down = "document.documentElement.scrollTop=2000"
 
         self.check_sanction_step1_No='//*[@id="editor-manuscript-sanction-check"]/button[2]'
         self.check_sanction_step2_No='//*[@id="me-sanction-check-form"]/label[1]/input'
@@ -110,24 +110,27 @@ class Process_Manu:
         docx_path = file_op.get_file_dir('.docx')
         self.driver.find_element(by=By.XPATH, value=self.upload_layout_down).click()
         pyperclip.copy(docx_path)
+        time.sleep(3)
         pyautogui.hotkey('ctrl', 'v')
         pyautogui.press('enter', 3)
-        logger.info("upload layout file")
+        logger.info("upload layout file success")
 
-        time.sleep(10)
+        time.sleep(20)
         pdf_path = file_op.get_file_dir('.pdf')
         self.driver.find_element(by=By.XPATH, value=self.upload_final_pdf).click()
         pyperclip.copy(pdf_path)
+        time.sleep(3)
         pyautogui.hotkey('ctrl', 'v')
         pyautogui.press('enter', 3)
-        logger.info("upload final pdf file")
+        logger.info("upload final pdf file success")
 
-        time.sleep(20)
+        time.sleep(25)
         pyautogui.press('esc', 1)
         self.driver.execute_script(self.js_to_down)
         self.driver.find_element(by=By.XPATH, value=self.online_checkbox).click()
         self.driver.find_element(by=By.XPATH, value=self.online_announce).click()
         time.sleep(10)
+        self.driver.execute_script(self.js_to_down)
         self.driver.find_element(by=By.XPATH, value=self.online_send_email).click()
         self.driver.implicitly_wait(10)
 

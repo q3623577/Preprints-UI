@@ -29,6 +29,11 @@ class TestCase:
     def test_online(self,login):
         test_process.TestProcess().test_online(login)
 
+    @allure.feature("test_submit_flow")
+    @allure.story("test_follow_version")
+    def test_publish(self,login):
+        test_submit_flow.TestAddPreprints().test_follow_new_preprints(login)
+
 
 
 

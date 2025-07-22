@@ -26,6 +26,7 @@ class PageObjectSubmit(BasePage):
         self.input_detail = 'tinymce'
 
 
+
         #第一步元素
         self.subject = '//*[@id="__nuxt"]/div[2]/div[1]/div/div/div[2]/form/div[1]/div/div[1]'
         self.all_subject = "ul[role='listbox']"
@@ -60,6 +61,8 @@ class PageObjectSubmit(BasePage):
         self.proceed_gap = "div[class='flex gap-2']"
         self.preprint_id = "//p[contains(text(),'1')]"
 
+        self.follow_next_button = '//*[@id="__nuxt"]/div[2]/div[1]/div/div/div[4]/form/div[2]/button[3]/span'
+        self.follow_next_button1= '//*[@id="__nuxt"]/div[2]/div[1]/div/div/div[5]/div[4]/button[3]/span'
 
     # 点击submit
     def click_submit(self):
@@ -147,7 +150,12 @@ class PageObjectSubmit(BasePage):
         self.driver.implicitly_wait(10)
         BT = buttons.find_elements(By.CSS_SELECTOR, "button[type='button']")[-1]
         BT.click()
-        
+
+    def follow_next(self):    #follow version步骤3
+        self.find_element((By.XPATH, self.follow_next_button)).click()
+
+    def follow_next1(self):   #follow version步骤4
+        self.find_element((By.XPATH, self.follow_next_button1)).click()
 
     # 选择type
     def click_type(self):
@@ -181,6 +189,30 @@ class PageObjectSubmit(BasePage):
             keywords_frame = iframes_input[2]
             self.driver.switch_to.frame(keywords_frame)
             
+            self.find_element((By.XPATH, self.input)).send_keys(content)
+            self.driver.switch_to.parent_frame()
+
+    def input_content_follow(self, item, content):
+        iframes_input = self.find_elements((By.CLASS_NAME, self.input_iframe))
+        if item == 'title':
+            # title_frame = self.find_element((By.XPATH, self.title)
+            title_frame = iframes_input[1]
+            self.driver.switch_to.frame(title_frame)
+
+            self.find_element((By.XPATH, self.input)).send_keys(content)
+            self.driver.switch_to.parent_frame()
+        elif item == 'abstract':
+            # abstract_frame = self.find_element((By.XPATH, self.abstract)
+            abstract_frame = iframes_input[2]
+            self.driver.switch_to.frame(abstract_frame)
+
+            self.find_element((By.XPATH, self.input)).send_keys(content)
+            self.driver.switch_to.parent_frame()
+        elif item == 'keywords':
+            # keywords_frame = self.find_element((By.XPATH, self.keywords)
+            keywords_frame = iframes_input[3]
+            self.driver.switch_to.frame(keywords_frame)
+
             self.find_element((By.XPATH, self.input)).send_keys(content)
             self.driver.switch_to.parent_frame()
         
@@ -268,6 +300,46 @@ class PageObjectSubmit(BasePage):
             pyperclip.copy(file_path)
             pyautogui.hotkey('ctrl', 'v')
             pyautogui.press('enter', 3)
+
+    def upload_file_follow(self, filetype, file_path):
+        # time.sleep(2)
+        file_flame = self.find_element((By.XPATH, '//*[@id="__nuxt"]/div[2]/div[1]/div/div/div[7]'))
+        up_buttons = file_flame.find_elements(By.CSS_SELECTOR, 'button[type=button]')
+        if filetype == 'paper':
+            up_buttons[0].click()
+            sleep(1)
+            pyperclip.copy(file_path)
+            pyautogui.hotkey('ctrl', 'v')
+            pyautogui.press('enter', 3)
+
+        elif filetype == 'pdf':
+            up_buttons[1].click()
+            pyperclip.copy(file_path)
+            sleep(1)
+            pyautogui.hotkey('ctrl', 'v')
+            pyautogui.press('enter', 3)
+
+        elif filetype == 'ga':
+            up_buttons[2].click()
+            pyperclip.copy(file_path)
+            sleep(1)
+            pyautogui.hotkey('ctrl', 'v')
+
+            pyautogui.press('enter', 2)
+        elif filetype == 'figures':
+            up_buttons[3].click()
+            sleep(1)
+            pyperclip.copy(file_path)
+            pyautogui.hotkey('ctrl', 'v')
+            pyautogui.press('enter', 3)
+
+        elif filetype == 'supple':
+            up_buttons[4].click()
+            sleep(1)
+            pyperclip.copy(file_path)
+            pyautogui.hotkey('ctrl', 'v')
+            pyautogui.press('enter', 3)
+
 
         # time.sleep(8)
 

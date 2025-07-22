@@ -1,3 +1,5 @@
+import time
+
 import allure
 import pytest
 from tool_uint.log_op import logger
@@ -9,6 +11,7 @@ class TestProcess:
 
     @allure.story("稿件处理--check")
     def test_check(self,login):
+        time.sleep(2)
         process = backend_pocess.Process_Manu(login)
         process.open_browser()
         excel_op = ExcelOp()
@@ -17,29 +20,44 @@ class TestProcess:
         process.open_detail_page(preprints_id)
         logger.info("打开详情页成功")
         process.check_list()
-        logger.info("check-list成功")
+        logger.info("check-list success")
         # process.click_accept("ok")
         excel_op.update_data(preprints_id,"checked")
-        logger.info("更新excel成功")
+        logger.info("更新excel success")
         excel_op.save_data()
-        logger.info("保存excel成功")
+        logger.info("保存excel success")
 
     def test_sanctions_check(self,login):
+        time.sleep(2)
         process = backend_pocess.Process_Manu(login)
         process.check_sanctions('no','no')
-        logger.info("sanctions-check成功")
+        logger.info("sanctions-check success")
 
 
     # @pytest.mark.skip
     def test_accept(self,login):
+        time.sleep(2)
         process = backend_pocess.Process_Manu(login)
         process.click_accept('ok')
-        logger.info("accept成功")
+        logger.info("accept success")
+        excel_op = ExcelOp()
+        preprints_id = excel_op.get_data()[-1][0]
+        excel_op.update_data(preprints_id,"accepted")
+        logger.info("更新excel success")
+        excel_op.save_data()
+        logger.info("保存excel success")
 
     def test_online(self,login):
+        time.sleep(2)
         process = backend_pocess.Process_Manu(login)
         process.click_online()
-        logger.info("online成功")
+        logger.info("online success")
+        excel_op = ExcelOp()
+        preprints_id = excel_op.get_data()[-1][0]
+        excel_op.update_data(preprints_id,"online")
+        logger.info("更新excel success")
+        excel_op.save_data()
+        logger.info("保存excel success")
 
 
     @pytest.mark.skip

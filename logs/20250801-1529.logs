@@ -1,0 +1,6 @@
+[2025-08-01 15:30:07,932][test_submit_flow.py 27][INFO]: 点击添加新稿件成功, 进入投稿页面
+[2025-08-01 15:30:14,076][test_submit_flow.py 36][INFO]: 投稿第一步成功
+[2025-08-01 15:30:26,659][test_submit_flow.py 48][INFO]: 投稿第二步成功
+[2025-08-01 15:30:27,288][test_submit_flow.py 56][INFO]: 投稿第三步成功
+[2025-08-01 15:30:29,520][test_submit_flow.py 61][INFO]: 投稿第四步成功
+[2025-08-01 15:30:57,400][test_process.py 19][INFO]: 获取preprints_id成功：133494

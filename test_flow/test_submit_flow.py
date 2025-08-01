@@ -17,14 +17,7 @@ directory = os.path.dirname(os.path.dirname(os.path.realpath(__file__))) + r'\te
 class TestAddPreprints:
     now_time = datetime.now()
     current_time = now_time.strftime("%Y-%m-%d %H:%M:%S")
-    # @pytest.fixture(autouse=True)
-    # def setUp(self,login):
-    #     self.driver = login
-    #     self.hold=PageObjectSubmit(self.driver)
-    #     yield
-    #
-    # def tearDown(self):
-    #     self.driver.quit()
+
 
     def test_add_new_preprints(self,login):
         submit_new =PageObjectSubmit(login)
@@ -169,10 +162,5 @@ class TestAddPreprints:
         logger.info("保存preprints_id数据成功")
         time.sleep(2)
 
-
-
-
-    # AddPreprints().add_new_preprints(set_data)
-    # AddPreprints().follow_new_preprints()E:\test-data\test_4\preprints-132659-final_file.pdf
 
     

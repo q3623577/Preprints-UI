@@ -42,7 +42,3 @@ class ExcelOp:
     def save_data(self):
         self.wb.save(self.file_path)
 
-# excel_op=ExcelOp()
-# excel_op=ExcelOp()
-# get=excel_op.get_data()[-1][0]
-# print(get)

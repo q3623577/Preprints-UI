@@ -25,7 +25,11 @@ def browser():
 @pytest.fixture(scope="session")
 def login():
     """登录账户"""
-    driver = webdriver.Chrome()
+    options = webdriver.ChromeOptions()
+    options.add_argument("--headless=new")  # Chrome 109+新语法
+    options.add_argument("--no-sandbox")  # 解决权限问题‌:ml-citation{ref="5" data="citationList"}
+    options.add_argument("--disable-dev-shm-usage")  # 防止内存不足崩溃
+    driver = webdriver.Chrome(options=options)
     driver.maximize_window()
     driver.get("https://zhou.sciprints.mdpi.dev/")
     driver.maximize_window()
@@ -53,15 +57,7 @@ def login():
     yield driver
     print("success")
     driver.quit()
-#
-# def pytest_sessionfinish(session, exitstatus):
-#     if exitstatus == ExitCode.OK:
-#         # 生成临时JSON报告
-#         os.system("pytest --alluredir=./allure-results")
-#         # 转换为HTML报告（需已配置Allure环境变量）
-#         os.system("allure generate ./allure-results -o ./allure-report --clean")
-#         # 自动打开报告（可选）
-#         os.system("allure open ./allure-report")
+
 
 
 

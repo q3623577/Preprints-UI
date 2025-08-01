@@ -6,20 +6,11 @@ directory = os.path.dirname(os.path.dirname(os.path.realpath(__file__))) + r'\te
 
 # 获取目录下的文件名
 def get_file_dir(type):
-    # print(directory)
     file_dir = [file for file in glob.glob(os.path.join(directory, 'preprints?*'+type)) if os.path.isfile(file)]
-    # file_dir2 = (os.path.abspath(file) for file in glob.glob(os.path.join(directory, 'preprints?*'+type)) if os.path.isfile(file))
     return file_dir[0]
 
 
 def replace_numbers(directory, type, replacement='', pattern=r'\d+'):
-    """
-    批量替换文件名中的数字
-    :param directory: 目标目录路径
-    :param replacement: 替换内容(默认为空即删除数字)
-    :param pattern: 匹配数字的正则模式(默认匹配连续数字)
-    :type: 替换的文件类型
-    """
     for filename in os.listdir(directory):
         old_path = os.path.join(directory, filename)
         new_path=' '

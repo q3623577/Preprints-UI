@@ -1,11 +1,45 @@
 #jenkins 内部安装python
 docker exec -u root -it jenkins /bin/bash     #进入容器
-apt-get update    #更新插件
-apt-get install -y python3 python3-pip  #安装python 和pip
-apt install python3.11-venv  #安装虚拟环境包
-apt-get install sudo    #安装sudo
+apt-get update    #更新插件,安装插件
+apt-get install -y python3 python3-pip
+apt install python3.11-venv
+apt-get install sudo
+apt-get install wget
+
+#安装chrome
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+dpkg -i google-chrome-stable_current_amd64.deb
+apt-get install -f -y   #自动修复依赖关系并强制确认操作的组合命令
+
+#安装chrome驱动
+#官网地址; https://googlechromelabs.github.io/chrome-for-testing/
+wget https://storage.googleapis.com/chrome-for-testing-public/版本号/linux64/chromedriver-linux64.zip
+unzip chromedriver_linux64.zip
+mv chromedriver /usr/local/bin/
+chmod +x /usr/local/bin/chromedriver
+
 
 
 #403 forbidden错误解决方法：在script console输入
 hudson.security.csrf.GlobalCrumbIssuerConfiguration.DISABLE_CSRF_PROTECTION = true
 
+#修改apt源
+#备份
+sudo cp /etc/apt/sources.list.d/debian.sources /etc/apt/sources.list.d/debian.sources.bak
+#修改
+sudo vim /etc/apt/sources.list.d/debian.sources
+#替换文本 清华大学源
+Types: deb
+URIs: https://mirrors.tuna.tsinghua.edu.cn/debian
+Suites: bookworm bookworm-updates bookworm-backports
+Components: main contrib non-free non-free-firmware
+Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
+
+Types: deb
+URIs: https://mirrors.tuna.tsinghua.edu.cn/debian-security
+Suites: bookworm-security
+Components: main contrib non-free non-free-firmware
+Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
+
+#更新
+apt-get update

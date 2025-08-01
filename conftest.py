@@ -1,6 +1,6 @@
 import os
 import time
-
+from pyvirtualdisplay import Display
 import pytest
 from _pytest.config import ExitCode
 from selenium import webdriver
@@ -25,17 +25,23 @@ def browser():
 @pytest.fixture(scope="session")
 def login():
     """登录账户"""
+    display = Display(visible=0, size=(1920, 1080))
+    display.start()
     options = webdriver.ChromeOptions()
     options.add_argument("--headless=new")  # Chrome 109+新语法
     options.add_argument("--no-sandbox")  # 解决权限问题‌:ml-citation{ref="5" data="citationList"}
     options.add_argument("--disable-dev-shm-usage")  # 防止内存不足崩溃
+    options.add_argument('--disable-gpu')
+    options.add_argument("--window-size=1920,1080")
     driver = webdriver.Chrome(options=options)
-    driver.maximize_window()
+    # driver.maximize_window()
     driver.get("https://zhou.sciprints.mdpi.dev/")
-    driver.maximize_window()
+
     driver.implicitly_wait(10)
     time.sleep(5)
+
     try:
+        driver.save_screenshot("debug1.png")
         driver.find_element(by=By.XPATH,
                                 value=LoginBtn).click()
         driver.implicitly_wait(10)
@@ -57,6 +63,7 @@ def login():
     yield driver
     print("success")
     driver.quit()
+    display.stop()
 
 
 

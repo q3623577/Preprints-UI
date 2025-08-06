@@ -6,6 +6,9 @@ apt install python3.11-venv
 apt-get install sudo
 apt-get install wget
 
+
+sudo apt-get install python3-tk python3-dev
+
 #安装chrome
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 dpkg -i google-chrome-stable_current_amd64.deb
@@ -20,7 +23,7 @@ chmod +x /usr/local/bin/chromedriver
 
 
 
-#403 forbidden错误解决方法：在script console输入
+#jenkins 403 forbidden错误解决方法：在script console输入
 hudson.security.csrf.GlobalCrumbIssuerConfiguration.DISABLE_CSRF_PROTECTION = true
 
 #修改apt源

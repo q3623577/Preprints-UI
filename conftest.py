@@ -25,13 +25,33 @@ def browser():
 @pytest.fixture(scope="session")
 def login():
     """登录账户"""
-    display = Display(visible=0, size=(1920, 1080))
-    display.start()
+    # display = Display(visible=0, size=(1920, 1080))
+    # display.start()
     options = webdriver.ChromeOptions()
     options.add_argument("--headless=new")  # Chrome 109+新语法
     options.add_argument("--no-sandbox")  # 解决权限问题‌:ml-citation{ref="5" data="citationList"}
     options.add_argument("--disable-dev-shm-usage")  # 防止内存不足崩溃
     options.add_argument('--disable-gpu')
+    options.add_argument('--single-process')  # 单进程模式
+    options.add_argument('--virtual-time-budget=10000')
+
+    # 添加内存优化参数
+    options.add_argument('--disable-extensions')
+    options.add_argument('--disable-software-rasterizer')
+    options.add_argument('--disable-infobars')
+    options.add_argument('--disable-breakpad')
+    options.add_argument('--disable-background-networking')
+    options.add_argument('--disable-background-timer-throttling')
+    options.add_argument('--disable-backgrounding-occluded-windows')
+    options.add_argument('--disable-client-side-phishing-detection')
+    options.add_argument('--disable-default-apps')
+    options.add_argument('--disable-features=Translate')
+    options.add_argument('--disable-hang-monitor')
+    options.add_argument('--disable-ipc-flooding-protection')
+    options.add_argument('--disable-notifications')
+    options.add_argument('--disable-renderer-backgrounding')
+    options.add_argument('--disable-sync')
+
     options.add_argument("--window-size=1920,1080")
     driver = webdriver.Chrome(options=options)
     # driver.maximize_window()
@@ -41,7 +61,7 @@ def login():
     time.sleep(5)
 
     try:
-        driver.save_screenshot("debug1.png")
+        # driver.save_screenshot("debug1.png")
         driver.find_element(by=By.XPATH,
                                 value=LoginBtn).click()
         driver.implicitly_wait(10)
@@ -63,7 +83,7 @@ def login():
     yield driver
     print("success")
     driver.quit()
-    display.stop()
+    # display.stop()
 
 
 
